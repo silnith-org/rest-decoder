@@ -34,15 +34,15 @@ import io.swagger.annotations.Api;
 public class HTMLResource {
     
     private static final Logger LOG = LoggerFactory.getLogger(HTMLResource.class);
-
+    
     private static final String HTML_NAMESPACE = "http://www.w3.org/1999/xhtml";
-
+    
     private static final Pattern PATTERN = Pattern.compile("<div class=(.*)/>");
-
+    
     private final DOMImplementation domImplementation;
     
     private final DOMImplementationLS domImplementationLS;
-
+    
     @Inject
     public HTMLResource(@NotNull final DOMImplementation domImplementation, @NotNull final DOMImplementationLS domImplementationLS) {
         super();
