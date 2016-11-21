@@ -23,6 +23,7 @@ public class RESTTool {
         return domImplementation;
     }
     
+    @Bean
     public DOMImplementationLS domImplementationLS(final DOMImplementationRegistry registry) {
         final DOMImplementation domImplementation = registry.getDOMImplementation("+LS 3.0");
         final Object feature = domImplementation.getFeature("+LS", "3.0");
