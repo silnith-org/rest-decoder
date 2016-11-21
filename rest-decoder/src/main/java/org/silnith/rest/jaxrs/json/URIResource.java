@@ -3,7 +3,6 @@ package org.silnith.rest.jaxrs.json;
 import java.net.URI;
 import java.util.List;
 
-import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.POST;
@@ -11,7 +10,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 import org.silnith.rest.jaxrs.json.model.HierarchicalURI;
 import org.silnith.rest.jaxrs.json.model.OpaqueURI;
@@ -21,9 +19,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
-import org.w3c.dom.DOMImplementation;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiParam;
@@ -35,9 +30,6 @@ import io.swagger.annotations.ApiParam;
 public class URIResource {
     
     private static final Logger LOG = LoggerFactory.getLogger(URIResource.class);
-    
-    @Inject
-    private DOMImplementation domImplementation;
     
     @Path("encode/hierarchical")
     @POST
@@ -112,36 +104,6 @@ public class URIResource {
             return decodeHierarchical(uri);
         }
     }
-    
-//    @Path("decode")
-//    @POST
-//    @Produces({ MediaType.TEXT_HTML })
-//    public Document decodeToHTML(@QueryParam("uri") @NotNull final URI uri) {
-//        final Document document = domImplementation.createDocument("http://www.w3.org/TR/html4", "html", null);
-//        
-//        final Element htmlElement = document.getDocumentElement();
-//        
-//        final Element headElement = document.createElement("head");
-//        
-//        final Element titleElement = document.createElement("title");
-//        
-//        final Element bodyElement = document.createElement("body");
-//        
-//        final Element headingElement = document.createElement("h1");
-//        
-//        htmlElement.appendChild(headElement);
-//        htmlElement.appendChild(bodyElement);
-//        
-//        headElement.appendChild(titleElement);
-//        
-//        titleElement.appendChild(document.createTextNode("URI: " + uri));
-//        
-//        bodyElement.appendChild(headingElement);
-//        
-//        headingElement.appendChild(document.createTextNode("URI: " + uri));
-//        
-//        return document;
-//    }
     
     private OpaqueURI decodeOpaque(@NotNull final URI uri) {
         LOG.trace("entering decodeOpaque({})", uri);
