@@ -11,9 +11,6 @@
         <artifactId>spring-boot-parent</artifactId>
         <version>1.4.0.RELEASE</version>
     </parent>
-    <properties>
-        <java.version>1.8</java.version>
-    </properties>
 	<name>REST Decoder</name>
 	<description>A REST service that encodes and decodes JSON text or URLs.</description>
     <inceptionYear>2016</inceptionYear>
@@ -27,6 +24,9 @@
         <developerConnection>scm:git:https://github.com/silnith-org/rest-decoder.git</developerConnection>
         <tag>HEAD</tag>
     </scm>
+    <properties>
+        <java.version>1.8</java.version>
+    </properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
