@@ -18,7 +18,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment=WebEnvironment.RANDOM_PORT)
-public class HTMLResourceTest {
+public class XMLResourceTest {
     
     @Inject
     private TestRestTemplate restTemplate;
@@ -40,13 +40,13 @@ public class HTMLResourceTest {
     }
     
     @Test
-    public void testEncodeHTMLAttribute() {
+    public void testEncodeXMLAttribute() {
         fail("Not yet implemented");
     }
     
     @Test
-    public void testDecodeHTMLAttribute() {
-        final ResponseEntity<String> entity = restTemplate.getForEntity("/convert/html/attribute/decode", String.class);
+    public void testDecodeXMLAttribute() {
+        final ResponseEntity<String> entity = restTemplate.getForEntity("/convert/xml/attribute/decode", String.class);
         
         assertTrue(entity.getStatusCode().is2xxSuccessful());
     }
