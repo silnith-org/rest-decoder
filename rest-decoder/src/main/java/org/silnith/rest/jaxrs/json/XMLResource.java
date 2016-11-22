@@ -61,7 +61,8 @@ public class XMLResource {
     @ApiOperation(value = "Encode an XML attribute.",
             notes = "Encodes any raw text so it can be safely placed into an XML attribute.")
     public String encodeXMLAttribute(
-            @ApiParam(value = "The raw text to place inside attribute.") @NotNull final String text) {
+            @ApiParam(value = "The raw text to place inside attribute.")
+            @NotNull final String text) {
         LOG.trace("entering encodeXMLAttribute({})", text);
         
         final Document document = domImplementation.createDocument(HTML_NAMESPACE, "html", null);
@@ -97,7 +98,8 @@ public class XMLResource {
     @ApiOperation(value = "Decode an XML attribute.",
             notes = "Decodes an XML attribute and returns the raw string it contains.")
     public String decodeXMLAttribute(
-            @ApiParam(value = "The XML attribute, including the quotation marks.") @NotNull final String text) {
+            @ApiParam(value = "The XML attribute, including the quotation marks.")
+            @NotNull final String text) {
         LOG.trace("entering decodeXMLAttribute({})", text);
         
         final LSInput lsInput = domImplementationLS.createLSInput();

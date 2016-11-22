@@ -38,18 +38,20 @@ public class URIResource {
     @ApiOperation(value = "Encode an hierarchical URL.",
             notes = "Encodes an hierarchical URL from the component parts.")
     public String encodeHierarchical(
-            @ApiParam(value = "The network protocol",
-                    example = "https") @QueryParam("scheme") @DefaultValue("http") final String scheme,
-            @ApiParam(value = "The user information") @QueryParam("userinfo") final String userInfo,
-            @ApiParam(value = "The host name or address",
-                    example = "silnith.org") @QueryParam("host") @NotNull final String host,
-            @ApiParam(value = "The port, or -1 for the default",
-                    example = "8080") @QueryParam("port") final Integer port,
-            @ApiParam(
-                    value = "Path segments separated by newlines (it is not possible to embed newlines yet)") @QueryParam("pathSegment") final List<String> pathSegments,
-            @ApiParam(value = "The fragment identifier") @QueryParam("fragment") final String fragment) {
-        LOG.trace("entering encodeHierarchical({}, {}, {}, {}, {}, {})", scheme, userInfo, host, port, pathSegments,
-                fragment);
+            @ApiParam(value = "The network protocol", example = "https")
+            @QueryParam("scheme") @DefaultValue("http") final String scheme,
+            @ApiParam(value = "The user information")
+            @QueryParam("userinfo") final String userInfo,
+            @ApiParam(value = "The host name or address", example = "silnith.org")
+            @QueryParam("host") @NotNull final String host,
+            @ApiParam(value = "The port, or -1 for the default", example = "8080")
+            @QueryParam("port") final Integer port,
+            @ApiParam(value = "Path segments separated by newlines (it is not possible to embed newlines yet)")
+            @QueryParam("pathSegment") final List<String> pathSegments,
+            @ApiParam(value = "The fragment identifier")
+            @QueryParam("fragment") final String fragment) {
+        LOG.trace("entering encodeHierarchical({}, {}, {}, {}, {}, {})", scheme,
+                userInfo, host, port, pathSegments, fragment);
                 
         final UriComponentsBuilder builder = UriComponentsBuilder.newInstance();
         
@@ -66,8 +68,8 @@ public class URIResource {
         
         final String uriString = builder.toUriString();
         
-        LOG.trace("{} returned from encodeHierarchical({}, {}, {}, {}, {}, {})", uriString, scheme, userInfo, host,
-                port, pathSegments, fragment);
+        LOG.trace("{} returned from encodeHierarchical({}, {}, {}, {}, {}, {})",
+                uriString, scheme, userInfo, host, port, pathSegments, fragment);
         return uriString;
     }
     
@@ -76,10 +78,12 @@ public class URIResource {
     @Produces({ MediaType.TEXT_PLAIN })
     @ApiOperation(value = "Encode an opaque URL.", notes = "Encodes an opaque URL from the component parts.")
     public String encodeOpaque(
-            @ApiParam(value = "The scheme", example = "mailto") @QueryParam("scheme") @NotNull final String scheme,
-            @ApiParam(value = "The scheme-specific part",
-                    example = "silnith@gmail.com") @QueryParam("schemeSpecificPart") @NotNull final String schemeSpecificPart,
-            @ApiParam(value = "The fragment identifier") @QueryParam("fragment") final String fragment) {
+            @ApiParam(value = "The scheme", example = "mailto")
+            @QueryParam("scheme") @NotNull final String scheme,
+            @ApiParam(value = "The scheme-specific part", example = "silnith@gmail.com")
+            @QueryParam("schemeSpecificPart") @NotNull final String schemeSpecificPart,
+            @ApiParam(value = "The fragment identifier")
+            @QueryParam("fragment") final String fragment) {
         LOG.trace("entering encodeOpaque({}, {}, {})", scheme, schemeSpecificPart, fragment);
         
         final UriComponentsBuilder builder = UriComponentsBuilder.newInstance();
@@ -121,7 +125,7 @@ public class URIResource {
 //        return Response.ok(opaqueURI).build();
     }
     
-    private HierarchicalURI decodeHierarchical(final URI uri) {
+    private HierarchicalURI decodeHierarchical(@NotNull final URI uri) {
         LOG.trace("entering decodeHierarchical({})", uri);
         
         final UriComponents components = UriComponentsBuilder.fromUri(uri).build();
