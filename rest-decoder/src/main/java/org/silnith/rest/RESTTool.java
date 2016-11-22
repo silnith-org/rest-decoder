@@ -12,7 +12,8 @@ import org.w3c.dom.ls.DOMImplementationLS;
 public class RESTTool {
     
     @Bean
-    public DOMImplementationRegistry domImplementationRegistry() throws ClassNotFoundException, InstantiationException, IllegalAccessException, ClassCastException {
+    public DOMImplementationRegistry domImplementationRegistry()
+            throws ClassNotFoundException, InstantiationException, IllegalAccessException, ClassCastException {
         final DOMImplementationRegistry registry = DOMImplementationRegistry.newInstance();
         return registry;
     }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import io.swagger.jaxrs.config.BeanConfig;
 
+
 @Component
 @ApplicationPath(Settings.BASE_PATH)
 public class Settings extends ResourceConfig {
@@ -26,5 +27,5 @@ public class Settings extends ResourceConfig {
         beanConfig.setResourcePackage(BASE_PACKAGE);
         beanConfig.setScan();
     }
-
+    
 }
