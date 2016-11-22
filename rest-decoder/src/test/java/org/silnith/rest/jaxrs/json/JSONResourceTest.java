@@ -17,9 +17,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.util.MultiValueMap;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment=WebEnvironment.RANDOM_PORT)
@@ -46,9 +49,11 @@ public class JSONResourceTest {
     
     @Test
     public void testDecode() {
-        final HttpEntity<String> postEntity = new HttpEntity<>("\"This is a test.\"");
+        final HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        final HttpEntity<String> requestEntity = new HttpEntity<>("\"This is a test.\"", headers);
         
-        final ResponseEntity<String> entity = restTemplate.postForEntity("/convert/json/decode", postEntity, String.class);
+        final ResponseEntity<String> entity = restTemplate.postForEntity("/convert/json/decode", requestEntity, String.class);
         
         assertEquals(HttpStatus.OK, entity.getStatusCode());
         assertEquals("This is a test.", entity.getBody());
@@ -56,9 +61,9 @@ public class JSONResourceTest {
     
     @Test
     public void testEncode() {
-        final HttpEntity<String> postEntity = new HttpEntity<>("This is a test.");
+        final HttpEntity<String> requestEntity = new HttpEntity<>("This is a test.");
         
-        final ResponseEntity<String> entity = restTemplate.postForEntity("/convert/json/encode", postEntity, String.class);
+        final ResponseEntity<String> entity = restTemplate.postForEntity("/convert/json/encode", requestEntity, String.class);
         
         assertEquals(HttpStatus.OK, entity.getStatusCode());
         assertEquals("[\"This is a test.\"]", entity.getBody());

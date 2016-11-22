@@ -13,6 +13,8 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -41,14 +43,26 @@ public class XMLResourceTest {
     
     @Test
     public void testEncodeXMLAttribute() {
-        fail("Not yet implemented");
+        final HttpEntity<String> requestEntity = new HttpEntity<String>("This is a test.");
+        
+        final ResponseEntity<String> entity = restTemplate.postForEntity("/convert/xml/attribute/encode", requestEntity, String.class);
+        
+        assertEquals(HttpStatus.OK, entity.getStatusCode());
+        
+        final String body = entity.getBody();
+        assertEquals("\"This is a test.\"", body);
     }
     
     @Test
     public void testDecodeXMLAttribute() {
-        final ResponseEntity<String> entity = restTemplate.getForEntity("/convert/xml/attribute/decode", String.class);
+        final HttpEntity<String> requestEntity = new HttpEntity<String>("'This is a test.'");
         
-        assertTrue(entity.getStatusCode().is2xxSuccessful());
+        final ResponseEntity<String> entity = restTemplate.postForEntity("/convert/xml/attribute/decode", requestEntity, String.class);
+        
+        assertEquals(HttpStatus.OK, entity.getStatusCode());
+        
+        final String body = entity.getBody();
+        assertEquals("This is a test.", body);
     }
     
 }

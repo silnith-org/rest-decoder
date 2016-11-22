@@ -17,6 +17,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment=WebEnvironment.RANDOM_PORT)
@@ -42,31 +43,45 @@ public class URIResourceTest {
     }
     
     @Test
-    public void testEncode() {
-        final HttpEntity<String> postEntity = new HttpEntity<>("This is a test.");
+    public void testEncodeHierarchical() {
+        final HttpEntity<String> requestEntity = new HttpEntity<>("This is a test.");
         
-        final ResponseEntity<String> entity = restTemplate.postForEntity("/convert/uri/encode", postEntity, String.class);
+        final UriComponentsBuilder builder = UriComponentsBuilder.fromPath("/convert/uri/encode/hierarchical");
+        builder.queryParam("scheme", "https");
+        builder.queryParam("host", "silnith.org");
+        builder.queryParam("pathSegment", "foo", "bar", "baz");
+        
+        final ResponseEntity<String> entity = restTemplate.postForEntity(builder.toUriString(), requestEntity, String.class);
         
         assertEquals(HttpStatus.OK, entity.getStatusCode());
-        assertEquals("This is a test.", entity.getBody());
+        assertEquals("https://silnith.org/foo/bar/baz", entity.getBody());
     }
     
     @Test
-    public void testDecodePOST() {
-        final HttpEntity<String> postEntity = new HttpEntity<>("http://silnith.org/foo/bar");
+    public void testEncodeOpaque() {
+        final HttpEntity<String> requestEntity = new HttpEntity<>("");
         
-        final ResponseEntity<String> entity = restTemplate.postForEntity("/convert/uri/decode", postEntity, String.class);
+        final UriComponentsBuilder builder = UriComponentsBuilder.fromPath("/convert/uri/encode/opaque");
+        builder.queryParam("scheme", "mailto");
+        builder.queryParam("schemeSpecificPart", "nobody@silnith.org");
+        
+        final ResponseEntity<String> entity = restTemplate.postForEntity(builder.toUriString(), requestEntity, String.class);
         
         assertEquals(HttpStatus.OK, entity.getStatusCode());
-        assertEquals("This is a test.", entity.getBody());
+        assertEquals("mailto:nobody@silnith.org", entity.getBody());
     }
     
     @Test
-    public void testDecodeGET() {
-        final ResponseEntity<String> entity = restTemplate.getForEntity("/convert/uri/decode/http:%2f%2fsilnith.org%2ffoo%2fbar", String.class);
+    public void testDecode() {
+        final HttpEntity<String> requestEntity = new HttpEntity<>("");
+        
+        final UriComponentsBuilder builder = UriComponentsBuilder.fromPath("/convert/uri/decode");
+        builder.queryParam("uri", "https://silnith.org/foo/bar");
+        
+        final ResponseEntity<String> entity = restTemplate.postForEntity(builder.toUriString(), requestEntity, String.class);
         
         assertEquals(HttpStatus.OK, entity.getStatusCode());
-        assertEquals("http://silnith.org/foo/bar", entity.getBody());
+        assertEquals("{}", entity.getBody());
     }
     
 }
