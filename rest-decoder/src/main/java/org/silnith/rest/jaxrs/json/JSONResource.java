@@ -29,10 +29,10 @@ public class JSONResource {
     @POST
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.TEXT_PLAIN })
-    @ApiOperation(value = "Decodes JSON data.", notes = "Parses JSON data and returns the raw value.  This is typically used to undo string escaping.")
+    @ApiOperation(value = "Decodes JSON data.",
+            notes = "Parses JSON data and returns the raw value.  This is typically used to undo string escaping.")
     public String decode(
-            @ApiParam(value = "A JSON-encoded string, including quotation marks.")
-            @NotNull final Object object) {
+            @ApiParam(value = "A JSON-encoded string, including quotation marks.") @NotNull final Object object) {
         LOG.trace("entering decode({})", object);
         
         final String string = String.valueOf(object);
@@ -45,13 +45,12 @@ public class JSONResource {
     @POST
     @Consumes({ MediaType.TEXT_PLAIN })
     @Produces({ MediaType.APPLICATION_JSON })
-    @ApiOperation(value = "Encodes text as a JSON string.", notes = "Takes raw text and returns the escaped form for a JSON string.")
-    public Object encode(
-            @ApiParam(value = "Any text.")
-            @NotNull final String text) throws IOException {
+    @ApiOperation(value = "Encodes text as a JSON string.",
+            notes = "Takes raw text and returns the escaped form for a JSON string.")
+    public Object encode(@ApiParam(value = "Any text.") @NotNull final String text) throws IOException {
         LOG.trace("entering encode({})", text);
         
-        final Object[] wrapped = new Object[] {text};
+        final Object[] wrapped = new Object[] { text };
         
         LOG.trace("{} returned from encode({})", wrapped, text);
         return wrapped;

@@ -27,6 +27,8 @@ import org.w3c.dom.ls.LSParser;
 import org.w3c.dom.ls.LSSerializer;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
 
 @Component
@@ -45,7 +47,8 @@ public class XMLResource {
     private final DOMImplementationLS domImplementationLS;
     
     @Inject
-    public XMLResource(@NotNull final DOMImplementation domImplementation, @NotNull final DOMImplementationLS domImplementationLS) {
+    public XMLResource(@NotNull final DOMImplementation domImplementation,
+            @NotNull final DOMImplementationLS domImplementationLS) {
         super();
         this.domImplementation = domImplementation;
         this.domImplementationLS = domImplementationLS;
@@ -55,7 +58,10 @@ public class XMLResource {
     @POST
     @Consumes({ MediaType.TEXT_PLAIN })
     @Produces({ MediaType.TEXT_PLAIN })
-    public String encodeXMLAttribute(@NotNull final String text) {
+    @ApiOperation(value = "Encode an XML attribute.",
+            notes = "Encodes any raw text so it can be safely placed into an XML attribute.")
+    public String encodeXMLAttribute(
+            @ApiParam(value = "The raw text to place inside attribute.") @NotNull final String text) {
         LOG.trace("entering encodeXMLAttribute({})", text);
         
         final Document document = domImplementation.createDocument(HTML_NAMESPACE, "html", null);
@@ -88,13 +94,18 @@ public class XMLResource {
     @POST
     @Consumes({ MediaType.TEXT_PLAIN })
     @Produces({ MediaType.TEXT_PLAIN })
-    public String decodeXMLAttribute(@NotNull final String text) {
+    @ApiOperation(value = "Decode an XML attribute.",
+            notes = "Decodes an XML attribute and returns the raw string it contains.")
+    public String decodeXMLAttribute(
+            @ApiParam(value = "The XML attribute, including the quotation marks.") @NotNull final String text) {
         LOG.trace("entering decodeXMLAttribute({})", text);
         
         final LSInput lsInput = domImplementationLS.createLSInput();
-        lsInput.setStringData("<html><head><title>Foo</title></head><body><div class=" + text + "></div></body></html>");
-        
-        final LSParser lsParser = domImplementationLS.createLSParser(DOMImplementationLS.MODE_SYNCHRONOUS, XMLConstants.W3C_XML_SCHEMA_NS_URI);
+        lsInput.setStringData(
+                "<html><head><title>Foo</title></head><body><div class=" + text + "></div></body></html>");
+                
+        final LSParser lsParser = domImplementationLS.createLSParser(DOMImplementationLS.MODE_SYNCHRONOUS,
+                XMLConstants.W3C_XML_SCHEMA_NS_URI);
         final Document parse = lsParser.parse(lsInput);
         final Element documentElement = parse.getDocumentElement();
         final Node lastChild = documentElement.getLastChild();
