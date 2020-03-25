@@ -81,7 +81,7 @@ public class URIResourceTest {
         final ResponseEntity<String> entity = restTemplate.postForEntity(builder.toUriString(), requestEntity, String.class);
         
         assertEquals(HttpStatus.OK, entity.getStatusCode());
-        assertEquals("{}", entity.getBody());
+        assertEquals("{\"scheme\":\"https\",\"userInfo\":null,\"host\":\"silnith.org\",\"port\":-1,\"pathSegments\":[\"foo\",\"bar\"],\"queryParameters\":{},\"fragment\":null}", entity.getBody());
     }
     
 }
